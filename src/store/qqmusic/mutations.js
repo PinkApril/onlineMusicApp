@@ -54,11 +54,11 @@ export default {
             state.setplaying.Ilike = false;
         }
     },
-    // 切歌 上一首 下一首 payload有四种状态 0：上一首-1 1：下一首+1 2：index归0 3：随机
+    // 切歌 上一首 下一首
     QIEGE(state,payload){
-        if(state.setplaying.index == 0){
+        if(payload == 0 && state.setplaying.index == 0){
             state.setplaying.index = state.setplaying.playingList.length -1
-        }else if(state.setplaying.index == state.setplaying.playingList.length -1){
+        }else if(payload == 1 && state.setplaying.index == state.setplaying.playingList.length -1){
             state.setplaying.index = 0
         }else if(payload == 0){ 
             state.setplaying.index -= 1
