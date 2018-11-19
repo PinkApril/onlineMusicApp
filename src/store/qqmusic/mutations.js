@@ -8,7 +8,6 @@ export default {
         state.like.songList = payload.songList;
         state.likeLength = payload.songList.length;
         state.like.albumList = payload.albumList;
-        console.log(payload)
         // console.log(payload.status)
     },
     // 记录搜索历史
@@ -70,7 +69,8 @@ export default {
     changeIndex(state,payload){
         if(payload == 'xunhuan'){
             state.setplaying.index = 0
-        }        
+        } 
+        console.log(222)       
     },
     // 改变播放状态
     changePlayerState(state,payload){
