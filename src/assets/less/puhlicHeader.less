@@ -1,0 +1,61 @@
+.box {
+    .shezhiye_box {
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        .shezhiye {
+            position: relative;
+            width: 80%;
+            height: 100%;
+            background: white;
+            span{
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                border-top: 1px solid silver;
+                padding: 3%;
+                text-align:right;
+                line-height: 40px;
+            }
+        }
+    }
+    header {
+        display: inline-block;
+        width: 100%;
+        background: rgb(22, 202, 22);
+        color: #fff;
+        text-align: center;
+        ul {
+            width: 100%;
+            font-size: 20px;
+            text-align: center;
+            line-height: 200%;
+            li {
+                width: 20%;
+                float: left;
+            }
+            li:first-child {
+                font-size: 20px;
+                text-align: left;
+                padding-left: 5%;
+            }
+            li:last-child {
+                font-size: 20px;
+                text-align: right;
+                padding-right: 5%;
+            }
+        }
+        span {
+            display: inline-block;
+            width: 95%;
+            margin-bottom: 3%;
+            padding: 1% 0;
+            background: rgb(3, 182, 77);
+        }
+    }
+}
+    .cur {
+        font-weight: bold;
+    }

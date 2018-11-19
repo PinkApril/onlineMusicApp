@@ -1,5 +1,6 @@
 <template>
     <div class="box" >
+        <comment v-if="comment" :pinglun="pinglun"></comment>
         <!-- 小播放条 -->
         <div v-show="isshowsmall_player" class="small_palyer">
             <div class="playing" v-if="playing.dataState">
@@ -82,35 +83,36 @@
                     <span class="iconfont icon-xin1" :class="{'cur':playing.Ilike}" @click="changelike(playingList[playing.index])"></span>
                     <span class="iconfont icon-icon--"></span>
                     <span class="iconfont icon-fenxiang1"></span>
-                    <span class="iconfont icon-BAI-pinglun"></span>
+                    <span class="iconfont icon-BAI-pinglun" @click="pinglun()"></span>
                 </div>
             </div>  
         </div>
         <div v-if="isshowplayer" class="bg" :style="{background:`url(api/${playingList[playing.index].imageURL}) 0 0 / 100% 100% no-repeat`}"></div>
         <div v-if="isshowplayer" class="bg2" :style="{background:`url(api/${playingList[playing.index].imageURL}) 0 0 / 100% 100% no-repeat`}"></div>
-    <!-- 播放列表 -->
-    <div class="bofanglist_box" v-show="isshowbofanglist">
-        <div class="bofanglist">
-            <div class="nav">
-                <span :class="this.mode" @click="setmode()"></span>
-                <span>{{this.mode_c}}</span>
-                <span>(共{{playingList.length}}首)</span>
-                <span class="iconfont icon-lajixiang" @click="delbofangall()"></span>
+        <!-- 播放列表 -->
+        <div class="bofanglist_box" v-show="isshowbofanglist">
+            <div class="bofanglist">
+                <div class="nav">
+                    <span :class="this.mode" @click="setmode()"></span>
+                    <span>{{this.mode_c}}</span>
+                    <span>(共{{playingList.length}}首)</span>
+                    <span class="iconfont icon-lajixiang" @click="delbofangall()"></span>
+                </div>
+                <ul>
+                    <li></li>
+                    <li v-for="(item,index) in playingList" >
+                        <span :class="{cur: item == playingList[playing.index]}" @click="changeplaying(item)">{{item.singName}}</span>
+                        <span class="iconfont icon-lajixiang" @click="delbofangsing(item,index)"></span>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li></li>
-                <li v-for="(item,index) in playingList" >
-                    <span :class="{cur: item == playingList[playing.index]}" @click="changeplaying(item)">{{item.singName}}</span>
-                    <span class="iconfont icon-lajixiang" @click="delbofangsing(item,index)"></span>
-                </li>
-            </ul>
+            <div class="bofanglist_bg" @click="bofanglist()"></div>
+            <span class="close" @click="bofanglist()">关闭</span>
         </div>
-        <div class="bofanglist_bg" @click="bofanglist()"></div>
-        <span class="close" @click="bofanglist()">关闭</span>
-    </div>
     </div>
 </template>
 <script>
+import comment from "./../components/player/comment";
 export default {
     data() {
         return {
@@ -133,7 +135,9 @@ export default {
             // 歌曲歌词
             geci: [],
             // 是否显示播放列表 默认不显示
-            isshowbofanglist:false
+            isshowbofanglist:false,
+            // comment状态
+            comment:false,
         };
     },
     filters: {
@@ -152,6 +156,10 @@ export default {
     },
     // 事件方法
     methods: {
+        // 打开评论页
+        pinglun(){
+            this.comment = !this.comment;
+        },
         // 播放器和播放页面的切换及获取处理歌词
         changeplayer(data) {
             this.isshowplayer = !this.isshowplayer;
@@ -326,296 +334,13 @@ export default {
         getgeci() {
             return this.playingList[this.playing.index].singCi;
         }
+    },
+    components: {
+        comment
     }
 };
 </script>
 
 <style lang="less" scoped>
-.box {
-    // width: 100%;
-    .bofanglist_box{
-        position: absolute;
-        top: 0;
-        z-index: 3;
-        width: 100%;
-        height: 100%;
-        .bofanglist_bg{
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(88, 88, 88, 0.5);
-        }
-        .bofanglist{
-            position: absolute;
-            bottom: 10%;
-            z-index: 2;
-            width: 100%;
-            height: 60%;
-            background-color: rgb(97, 97, 97);
-            overflow: scroll;
-            .nav{
-                position: fixed;
-                overflow: hidden;
-                width: 100%;
-                background-color: red;
-                height: 60px;
-                line-height: 60px;
-                padding: 0 3%;
-                span:last-child{
-                    float: right;
-                }
-            }
-            ul{
-                width: 100%;
-                height: 100%;
-                li{
-                    width: 100%;
-                    height: 60px;
-                    padding: 0 3%;
-                    line-height: 60px;
-                    border-bottom: 1px solid silver;
-                    span:last-child{
-                        float: right;
-                    }
-                    span.cur{
-                        color: rgb(22, 202, 22);
-                    }
-                }
-            }
-        }
-        .close{
-            display: block;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 10%;
-            background-color: rgba(88, 88, 88, 0.8);
-            line-height: 60px;
-            text-align:center;
-        }
-    }
-    .iconfont {
-        font-size: 30px;
-    }
-    .small_palyer {
-        // overflow: hidden;
-        width: 100%;
-        height: 10%;
-        position: fixed;
-        bottom: 0;
-        border-top: 1px solid silver;
-        .playing {
-            overflow: hidden;
-            float: left;
-            width: 70%;
-            height: 100%;
-            h3{
-                line-height: 60px;
-                padding: 0 5%;
-            }
-            b {
-                line-height: 315%;
-            }
-            .imgee {
-                float: left;
-                height: 100%;
-                width: 24%;
-                img {
-                    width: 75%;
-                    height: 75%;
-                    border-radius: 100%;
-                    margin: 10% 15%;
-                }
-            }
-            ul {
-                display: inline-block;
-                height: 100%;
-                li {
-                    line-height: 150%;
-                }
-            }
-        }
-        .tubiao {
-            width: 20%;
-            height: 100%;
-            float: right;
-            line-height: 350%;
-            span {
-                color: rgb(22, 202, 22);
-            }
-        }
-    }
-    
-    .player {
-        position: absolute;
-        top: 0;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        color: rgba(253, 253, 253, 0.938);
-    .nav {
-        width: 100%;
-        height: 8%;
-        line-height: 350%;
-        text-align: center;
-        span {
-        display: inline-block;
-        }
-        span:first-child {
-        width: 15%;
-        }
-        span:nth-child(2) {
-        width: 70%;
-        }
-    }
-    .swiper-container {
-        width: 100%;
-        height: 60%;
-        .swiper-wrapper {
-            .swiper-slide {
-                width: 100%;
-            padding: 5%;
-            }
-        .swiper-slide:nth-child(2) {
-            padding-top: 0;
-            text-align: center;
-            span {
-                display: inline-block;
-                // margin-bottom:5%;
-            }
-            img {
-                width: 70%;
-                border-radius: 50%;
-                border: 10px solid rgba(77, 20, 20, 0.3);
-                margin: 5% 0;
-            }
-        }
-        .swiper-slide:nth-child(3) {
-            overflow: hidden;
-            position: relative;
-            ul {
-                position: absolute;
-                left: 0;
-                top:50%;
-                width: 100%;
-                transition: all 0.5s;
-                text-align: center;
-                li {
-                    width: 100%;
-                    height: 26px;
-                    font-size: 16px;
-                    line-height: 26px;
-                    span{
-                        display: inline-block;
-                        position: relative;
-                        white-space: nowrap;
-                        height: 26px;
-                        span{
-                            overflow: hidden;
-                            white-space: nowrap;
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: 0%;
-                            color: red;
-                            animation-play-state: paused;
-                        }
-                        span.cur{
-                            animation-name: geci;
-                            animation-timing-function: linear;
-                            color: green;
-                            @keyframes geci {
-                                from{width:0%}
-                                to{width:100%}
-                            }
-                            animation-duration: 5s;
-                    }
-                    }
-                }
-            }
-        }
-      }
-    }
-    .btn {
-        width: 98%;
-        text-align: center;
-        .progressbar {
-            width: 100%;
-            padding: 0 3%;
-            .start,.end {
-                width: 10%;
-                line-height: 40px;
-            }
-            .duration {
-                width: 73%;
-                height: 2px;
-                display: inline-block;
-                position: relative;
-                background: rgba(253, 253, 253, 0.5);
-                margin: 1.2% auto;
-                .currentTime {
-                    display: inline-block;
-                    position: absolute;
-                    background: red;
-                    width: 0%;
-                    height: 2px;
-                    top: 0;
-                    left: 0;
-                }
-            }
-        }
-    div:nth-child(2) {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 2%;
-        span {
-        display: inline-block;
-        width: 18.5%;
-        }
-        span:nth-child(2),
-        span:nth-child(4) {
-        font-size: 50px;
-        }
-        span:nth-child(3) {
-        font-size: 70px;
-        }
-        span:nth-child(1),
-        span:nth-child(5) {
-        font-size: 40px;
-        color: rgb(179, 179, 179);
-        }
-    }
-    div:nth-child(3) {
-        margin: 0 10%;
-        width: 80%;
-        text-align: center;
-        span {
-            display: inline-block;
-            width: 23%;
-            font-size: 30px;
-            color: rgb(179, 179, 179);
-        }
-        span.cur {
-            color: red;
-        }
-      }
-    }
-    }
-    .bg {
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    filter: blur(10px);
-    }
-    .bg2 {
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    }
-}
+    @import '../assets/less/player/player.less';
 </style>

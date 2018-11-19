@@ -8,7 +8,6 @@ export default {
         state.like.songList = payload.songList;
         state.likeLength = payload.songList.length;
         state.like.albumList = payload.albumList;
-        console.log(payload)
         // console.log(payload.status)
     },
     // 记录搜索历史
@@ -54,11 +53,11 @@ export default {
             state.setplaying.Ilike = false;
         }
     },
-    // 切歌 上一首 下一首 payload有四种状态 0：上一首-1 1：下一首+1 2：index归0 3：随机
+    // 切歌 上一首 下一首
     QIEGE(state,payload){
-        if(state.setplaying.index == 0){
+        if(payload == 0 && state.setplaying.index == 0){
             state.setplaying.index = state.setplaying.playingList.length -1
-        }else if(state.setplaying.index == state.setplaying.playingList.length -1){
+        }else if(payload == 1 && state.setplaying.index == state.setplaying.playingList.length -1){
             state.setplaying.index = 0
         }else if(payload == 0){ 
             state.setplaying.index -= 1
@@ -70,7 +69,8 @@ export default {
     changeIndex(state,payload){
         if(payload == 'xunhuan'){
             state.setplaying.index = 0
-        }        
+        } 
+        console.log(222)       
     },
     // 改变播放状态
     changePlayerState(state,payload){

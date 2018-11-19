@@ -2,9 +2,9 @@
     <div>
         <div class="header_box">
             <div class="header">
-                <div @click="loginGO(['/login','/login/gerenzhongxin'])">
+                <div>
                     <span>头像</span>
-                    <span class="username">{{this.$store.state.nikeName}}</span>
+                    <span class="username" @click="loginGO(['/login','/login/user'])">{{this.$store.state.nikeName}}</span>
                 </div>
                 <ul>
                     <li>
@@ -95,103 +95,5 @@
 </script>
 
 <style lang="less" scoped>
-    * {
-        font-size: 16px;
-    }
-
-    .header_box {
-        width: 100%;
-
-        .header {
-            width: 95%;
-            border: 1px solid silver;
-            margin: 0 auto;
-            div {
-                text-align: center;
-                font-size: 20px;
-                line-height: 40px;
-
-                .username {
-                    font-size: 20px;
-                    font: bold;
-                }
-            }
-
-            ul {
-                overflow: hidden;
-                text-align: center;
-
-                li {
-                    width: 50%;
-                    float: left;
-                    padding: 3%;
-
-                    i {
-                        font-size: 13px;
-                    }
-                }
-
-                li:first-child {
-                    border-right: 1px solid rgb(22, 202, 22);
-                }
-            }
-        }
-    }
-
-    .body_box {
-        .body_top {
-            width: 100%;
-            text-align: center;
-
-            li {
-                width: 33.33%;
-                float: left;
-                padding: 3% 0;
-
-                span {
-                    font-size: 50px;
-                    color: rgb(11, 206, 11);
-                }
-            }
-
-            li:last-child {
-                padding-bottom: 10%;
-            }
-        }
-
-        .gedan {
-            .gedan_top {
-                text-align: center;
-            }
-
-            .gedan_bottom {
-                width: 100%;
-
-                li {
-                    width: 100%;
-                    margin-bottom: 3%;
-
-                    table {
-                        width: 100%;
-
-                        tr {
-                            td {
-                                width: 50%;
-                            }
-
-                            td:last-child {
-                                text-align: right;
-
-                                span {
-                                    font-size: 20px;
-                                    padding: 0 5%;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+    @import url('../../assets/less/indexmusic/index.less');
 </style>

@@ -13,7 +13,7 @@ import yinyueguan from "../views/yinyueguan/index.vue"
 import faxian from "../views/faxian/index.vue"
 
 import login from "../views/login/login.vue"
-import gerenzhongxin from "../views/login/gerenzhongxin.vue"
+import user from '../views/login/user.vue'
 import register from "../views/login/register.vue"
 
 Vue.use(Router)
@@ -67,18 +67,20 @@ const router = new Router({
             path: '/login',
             name: '发现',
             component: login,
-            children:[{
-                path: 'gerenzhongxin',
-                meta: {
-                    requireAuth: true
-                },
-                name: '个人中心',
-                component: gerenzhongxin, 
-            },{
-                path: 'register',
-                name: '注册页',
-                component: register,  
-            }]
+            children:[
+                {
+                    path: 'user',
+                    meta: {
+                        requireAuth: true
+                    },
+                    name: '个人中心',
+                    component: user, 
+                },{
+                    path: 'register',
+                    name: '注册页',
+                    component: register,  
+                }
+            ]
         },
          {
             path: "*",
@@ -99,7 +101,6 @@ router.beforeEach((to, from, next) => {
                 // } // 将跳转的路由path作为参数，登录成功后跳转到该路由
             })
         }
-        console.log("需要登录")
     } else {
         next();
     }

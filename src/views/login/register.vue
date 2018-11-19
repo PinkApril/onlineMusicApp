@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="register">
         <span @click="routerGO()">取消</span>
         <input type="userName" placeholder="账号" v-model="userName">
         <input type="password" placeholder="密码" v-model="password">
@@ -46,33 +46,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.box{
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: url("../../../static/image/aaa.jpg") no-repeat;
-    background-size: 120%;
-    text-align: center;
-    span{
-        text-align:left;
-        display: block;
-        margin-bottom: 50%;
-        padding: 3%;
-    }
-    input{
-        width: 70%;
-        padding: 3% 0;
-        margin: 1%;
-    }
-    button{
-        width: 70%;
-        padding: 3% 0;
-        margin: 3%;
-        background: rgb(5, 190, 61);
-    }
-}
+    @import'../../assets/less/login/register.less';
 </style>
 
